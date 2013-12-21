@@ -18,7 +18,7 @@ void start_5min_count()
 
 int main(void) {
     WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
-    set_dco(16);		// Set 1MHz clock
+    set_dco(12);		// Set 12MHz clock
 
 	// BIT 7-6 = 00 Select MCLK to DCOCLK
 	// BIT 5-4 = 00 Set MCLK Clock Divider to /1

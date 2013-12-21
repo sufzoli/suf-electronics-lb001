@@ -84,7 +84,7 @@ void Data_RX (void);
 // Public functions
 void i2c_init(char int_pullup)
 {
-	if(SYSTIME_DCO_CLOCK == 0)			// If system clock is not initialized by systime.c roiutines
+	if(SYSTIME_DCO_CLOCK == 0)			// If system clock is not initialized by systime.c routines
 	{
 		set_dco(1);						// set DCO to 1MHz
 	}
@@ -98,7 +98,10 @@ void i2c_init(char int_pullup)
 	_DINT();								// Disable interrupt
 	USICTL0 = USIPE6 + USIPE7 + USIMST + USISWRST;  // Port & USI mode setup
 	USICTL1 = USII2C + USIIE;                   // Enable I2C mode & USI interrupt
-	USICKCTL = USIDIV_1 + USISSEL_5 + USICKPL;    // USI clk: SCL = TACCR0
+
+//	USICKCTL = USIDIV_1 + USISSEL_5 + USICKPL;    // USI clk: SCL = TACCR0
+	USICKCTL = USIDIV_7 + USISSEL_2 + USICKPL;    // USI clk: SCL = SMCLK
+
 	USICNT |= USIIFGCC;                       // Disable automatic clear control
 	USICTL0 &= ~USISWRST;                     // Enable USI
 	USICTL1 &= ~USIIFG;                       // Clear pending flag
