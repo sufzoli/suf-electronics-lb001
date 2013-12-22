@@ -10,6 +10,7 @@ main.obj: ../LED.h
 main.obj: ../counter.h
 main.obj: ../button.h
 main.obj: ../flash.h
+main.obj: ../serial.h
 
 ../main.c: 
 C:/ti/ccsv5/ccs_base/msp430/include/msp430.h: 
@@ -21,3 +22,4 @@ C:/ti/ccsv5/ccs_base/msp430/include/in430.h:
 ../counter.h: 
 ../button.h: 
 ../flash.h: 
+../serial.h: 

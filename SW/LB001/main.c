@@ -5,6 +5,7 @@
 #include "counter.h"
 #include "button.h"
 #include "flash.h"
+#include "serial.h"
 
 /*
  * main.c
@@ -49,6 +50,9 @@ int main(void) {
 	unsigned char buttonstate = 0;
 	unsigned char buttonvalue = 0;
 
+	unsigned char prev_min = 0;
+	unsigned char prev_sec = 0;
+
 	FLASH_init();
 
 	FLASH_BTN_FUNC[0] = ctr_up;
@@ -61,6 +65,9 @@ int main(void) {
 
 	ctr_init();
 	// ctr_start(2,0);
+	serial_init();
+
+    TimerA_UART_print("\x1B[2JLB001 USB - READY.\r\n");
 
 	unsigned char i;
 
@@ -71,12 +78,25 @@ int main(void) {
 			LED_MINUTE = CTR_MIN;
 			LED_SECOND = CTR_SEC;
 			LED_FLAGS = LED_EN_MIN + LED_EN_SEC + LED_UD + LED_LD;
+			if(prev_min != CTR_MIN || prev_sec != CTR_SEC)
+			{
+				TimerA_UART_tx((CTR_MIN / 10) + 0x30);
+				TimerA_UART_tx((CTR_MIN % 10) + 0x30);
+				TimerA_UART_tx(0x3A);
+				TimerA_UART_tx((CTR_SEC / 10) + 0x30);
+				TimerA_UART_tx((CTR_SEC % 10) + 0x30);
+				TimerA_UART_tx(0x0D);
+				prev_min = CTR_MIN;
+				prev_sec = CTR_SEC;
+			}
 		}
 		else
 		{
 			LED_MINUTE = 0;
 			LED_SECOND = 0;
 			LED_FLAGS = 0;
+			prev_min = 0;
+			prev_sec = 0;
 		}
 		LED_displaydigit();
 		// button handling
