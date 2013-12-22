@@ -14,7 +14,6 @@ C_SRCS += \
 ../flash.c \
 ../i2c_usi.c \
 ../main.c \
-../systime.c \
 ../textconv.c 
 
 OBJS += \
@@ -25,7 +24,6 @@ OBJS += \
 ./flash.obj \
 ./i2c_usi.obj \
 ./main.obj \
-./systime.obj \
 ./textconv.obj 
 
 C_DEPS += \
@@ -36,7 +34,6 @@ C_DEPS += \
 ./flash.pp \
 ./i2c_usi.pp \
 ./main.pp \
-./systime.pp \
 ./textconv.pp 
 
 C_DEPS__QUOTED += \
@@ -47,7 +44,6 @@ C_DEPS__QUOTED += \
 "flash.pp" \
 "i2c_usi.pp" \
 "main.pp" \
-"systime.pp" \
 "textconv.pp" 
 
 OBJS__QUOTED += \
@@ -58,7 +54,6 @@ OBJS__QUOTED += \
 "flash.obj" \
 "i2c_usi.obj" \
 "main.obj" \
-"systime.obj" \
 "textconv.obj" 
 
 C_SRCS__QUOTED += \
@@ -69,7 +64,6 @@ C_SRCS__QUOTED += \
 "../flash.c" \
 "../i2c_usi.c" \
 "../main.c" \
-"../systime.c" \
 "../textconv.c" 
 
 

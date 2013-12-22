@@ -1,6 +1,5 @@
 #include <msp430.h>
 #include "i2c_usi.h"
-#include "systime.h"
 #include "MCP23017.h"
 #include "LED.h"
 #include "counter.h"
@@ -18,7 +17,10 @@ void start_5min_count()
 
 int main(void) {
     WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
-    set_dco(12);		// Set 12MHz clock
+    // Set 12MHz clock
+	// DCOCTL = 0;
+	BCSCTL1 = CALBC1_12MHZ;
+	DCOCTL = CALDCO_12MHZ;
 
 	// BIT 7-6 = 00 Select MCLK to DCOCLK
 	// BIT 5-4 = 00 Set MCLK Clock Divider to /1

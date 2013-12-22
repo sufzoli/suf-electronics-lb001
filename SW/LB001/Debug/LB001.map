@@ -1,10 +1,10 @@
 ******************************************************************************
                   MSP430 Linker PC v4.1.5                      
 ******************************************************************************
->> Linked Sat Dec 21 23:44:45 2013
+>> Linked Sun Dec 22 05:06:50 2013
 
 OUTPUT FILE NAME:   <LB001.out>
-ENTRY POINT SYMBOL: "_c_int00"  address: 0000e7ae
+ENTRY POINT SYMBOL: "_c_int00"  address: 0000e6fa
 
 
 MEMORY CONFIGURATION
@@ -14,12 +14,12 @@ MEMORY CONFIGURATION
   SFR                   00000000   00000010  00000000  00000010  RWIX
   PERIPHERALS_8BIT      00000010   000000f0  00000000  000000f0  RWIX
   PERIPHERALS_16BIT     00000100   00000100  00000000  00000100  RWIX
-  RAM                   00000200   00000100  00000083  0000007d  RWIX
+  RAM                   00000200   00000100  00000081  0000007f  RWIX
   INFOD                 00001000   00000040  00000000  00000040  RWIX
   INFOC                 00001040   00000040  00000000  00000040  RWIX
   INFOB                 00001080   00000040  00000000  00000040  RWIX
   INFOA                 000010c0   00000040  00000000  00000040  RWIX
-  FLASH                 0000e000   00001fe0  0000090e  000016d2  RWIX
+  FLASH                 0000e000   00001fe0  00000846  0000179a  RWIX
   INT00                 0000ffe0   00000002  00000000  00000002  RWIX
   INT01                 0000ffe2   00000002  00000000  00000002  RWIX
   INT02                 0000ffe4   00000002  00000000  00000002  RWIX
@@ -55,14 +55,13 @@ section   page    origin      length       input sections
 .TI.noinit 
 *          0    00000200    00000000     UNINITIALIZED
 
-.data      0    0000021e    00000015     
+.data      0    0000021e    00000013     
                   0000021e    00000009     counter.obj (.data)
                   00000227    00000001     --HOLE--
                   00000228    00000006     i2c_usi.obj (.data)
-                  0000022e    00000002     systime.obj (.data)
-                  00000230    00000001     LED.obj (.data)
-                  00000231    00000001     --HOLE--
-                  00000232    00000001     button.obj (.data)
+                  0000022e    00000001     LED.obj (.data)
+                  0000022f    00000001     --HOLE--
+                  00000230    00000001     button.obj (.data)
 
 .TI.persistent 
 *          0    0000021e    00000000     UNINITIALIZED
@@ -71,56 +70,53 @@ section   page    origin      length       input sections
                   000002b0    00000002     rts430_eabi.lib : boot.obj (.stack)
                   000002b2    0000004e     --HOLE--
 
-.text      0    0000e000    000008e2     
+.text      0    0000e000    0000081a     
                   0000e000    000001ca     i2c_usi.obj (.text:USI_TXRX)
                   0000e1ca    000000e6     LED.obj (.text:LED_displaydigit)
-                  0000e2b0    000000ce     main.obj (.text:main)
-                  0000e37e    00000088     counter.obj (.text:WDT_ISR)
-                  0000e406    00000074     systime.obj (.text:set_dco)
-                  0000e47a    0000005e     rts430_eabi.lib : copy_decompress_rle.obj (.text:__TI_decompress_rle_core)
-                  0000e4d8    0000005e                     : autoinit.obj (.text:_auto_init)
-                  0000e536    0000005c     button.obj (.text:BTN_read)
-                  0000e592    00000054     i2c_usi.obj (.text:i2c_init)
-                  0000e5e6    0000003e     i2c_usi.obj (.text:i2c_reg_read)
-                  0000e624    0000003c     counter.obj (.text:ctr_down)
-                  0000e660    0000002e     MCP23017.obj (.text:MCP_init)
-                  0000e68e    0000002e     systime.obj (.text:timer_a_i2c_100k)
-                  0000e6bc    0000002c     rts430_eabi.lib : asr16.obj (.text)
-                  0000e6e8    0000002c                     : div16s.obj (.text)
-                  0000e714    0000002c                     : lsl16.obj (.text)
-                  0000e740    0000001e     i2c_usi.obj (.text:i2c_transmit)
-                  0000e75e    0000001c     i2c_usi.obj (.text:Data_TX)
-                  0000e77a    0000001a     button.obj (.text:BTN_init)
-                  0000e794    0000001a     MCP23017.obj (.text:MCP_Write)
-                  0000e7ae    0000001a     rts430_eabi.lib : boot.obj (.text:_c_int00_noexit)
-                  0000e7c8    00000018     flash.obj (.text:FLASH_init)
-                  0000e7e0    00000016     MCP23017.obj (.text:MCP_Read)
-                  0000e7f6    00000016     counter.obj (.text:ctr_start)
-                  0000e80c    00000016     counter.obj (.text:ctr_stop)
-                  0000e822    00000016     rts430_eabi.lib : div16u.obj (.text)
-                  0000e838    00000014     counter.obj (.text:ctr_up)
-                  0000e84c    00000014     rts430_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
-                  0000e860    00000014                     : mult16.obj (.text)
-                  0000e874    00000012                     : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
-                  0000e886    00000012                     : memcpy.obj (.text:memcpy)
-                  0000e898    00000010     i2c_usi.obj (.text:Data_RX)
-                  0000e8a8    00000010     rts430_eabi.lib : epilog.obj (.text)
-                  0000e8b8    0000000e     counter.obj (.text:ctr_init)
-                  0000e8c6    0000000c     main.obj (.text:start_5min_count)
-                  0000e8d2    00000006     rts430_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
-                  0000e8d8    00000004                     : pre_init.obj (.text:_system_pre_init)
-                  0000e8dc    00000004                     : exit.obj (.text:abort)
-                  0000e8e0    00000002     flash.obj (.text:FLASH_dummy)
+                  0000e2b0    000000d2     main.obj (.text:main)
+                  0000e382    00000088     counter.obj (.text:WDT_ISR)
+                  0000e40a    0000005e     rts430_eabi.lib : copy_decompress_rle.obj (.text:__TI_decompress_rle_core)
+                  0000e468    0000005e                     : autoinit.obj (.text:_auto_init)
+                  0000e4c6    0000005c     button.obj (.text:BTN_read)
+                  0000e522    0000003e     i2c_usi.obj (.text:i2c_init)
+                  0000e560    0000003e     i2c_usi.obj (.text:i2c_reg_read)
+                  0000e59e    0000003c     counter.obj (.text:ctr_down)
+                  0000e5da    0000002e     MCP23017.obj (.text:MCP_init)
+                  0000e608    0000002c     rts430_eabi.lib : asr16.obj (.text)
+                  0000e634    0000002c                     : div16s.obj (.text)
+                  0000e660    0000002c                     : lsl16.obj (.text)
+                  0000e68c    0000001e     i2c_usi.obj (.text:i2c_transmit)
+                  0000e6aa    0000001c     i2c_usi.obj (.text:Data_TX)
+                  0000e6c6    0000001a     button.obj (.text:BTN_init)
+                  0000e6e0    0000001a     MCP23017.obj (.text:MCP_Write)
+                  0000e6fa    0000001a     rts430_eabi.lib : boot.obj (.text:_c_int00_noexit)
+                  0000e714    00000018     flash.obj (.text:FLASH_init)
+                  0000e72c    00000016     MCP23017.obj (.text:MCP_Read)
+                  0000e742    00000016     counter.obj (.text:ctr_start)
+                  0000e758    00000016     counter.obj (.text:ctr_stop)
+                  0000e76e    00000016     rts430_eabi.lib : div16u.obj (.text)
+                  0000e784    00000014     counter.obj (.text:ctr_up)
+                  0000e798    00000014     rts430_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
+                  0000e7ac    00000012                     : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
+                  0000e7be    00000012                     : memcpy.obj (.text:memcpy)
+                  0000e7d0    00000010     i2c_usi.obj (.text:Data_RX)
+                  0000e7e0    00000010     rts430_eabi.lib : epilog.obj (.text)
+                  0000e7f0    0000000e     counter.obj (.text:ctr_init)
+                  0000e7fe    0000000c     main.obj (.text:start_5min_count)
+                  0000e80a    00000006     rts430_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
+                  0000e810    00000004                     : pre_init.obj (.text:_system_pre_init)
+                  0000e814    00000004                     : exit.obj (.text:abort)
+                  0000e818    00000002     flash.obj (.text:FLASH_dummy)
 
-.const     0    0000e8e2    0000000a     
-                  0000e8e2    0000000a     LED.obj (.const:.string:segments)
+.const     0    0000e81a    0000000a     
+                  0000e81a    0000000a     LED.obj (.const:.string:segments)
 
-.cinit     0    0000e8ec    00000022     
-                  0000e8ec    0000000f     (.cinit..data.load) [load image, compression = rle]
-                  0000e8fb    00000001     --HOLE-- [fill = 0]
-                  0000e8fc    00000006     (__TI_handler_table)
-                  0000e902    00000004     (.cinit..bss.load) [load image, compression = zero_init]
-                  0000e906    00000008     (__TI_cinit_table)
+.cinit     0    0000e824    00000022     
+                  0000e824    0000000f     (.cinit..data.load) [load image, compression = rle]
+                  0000e833    00000001     --HOLE-- [fill = 0]
+                  0000e834    00000006     (__TI_handler_table)
+                  0000e83a    00000004     (.cinit..bss.load) [load image, compression = zero_init]
+                  0000e83e    00000008     (__TI_cinit_table)
 
 USI        0    0000ffe8    00000002     
                   0000ffe8    00000002     i2c_usi.obj (.int04)
@@ -134,14 +130,14 @@ WDT        0    0000fff4    00000002
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 0000e906 records: 2, size/record: 4, table size: 8
-	.data: load addr=0000e8ec, load size=0000000f bytes, run addr=0000021e, run size=00000015 bytes, compression=rle
-	.bss: load addr=0000e902, load size=00000004 bytes, run addr=00000200, run size=0000001e bytes, compression=zero_init
+__TI_cinit_table @ 0000e83e records: 2, size/record: 4, table size: 8
+	.data: load addr=0000e824, load size=0000000f bytes, run addr=0000021e, run size=00000013 bytes, compression=rle
+	.bss: load addr=0000e83a, load size=00000004 bytes, run addr=00000200, run size=0000001e bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 0000e8fc records: 3, size/record: 2, table size: 6
+__TI_handler_table @ 0000e834 records: 3, size/record: 2, table size: 6
 	index: 0, handler: __TI_zero_init
 	index: 1, handler: __TI_decompress_rle24
 	index: 2, handler: __TI_decompress_none
@@ -161,9 +157,9 @@ address    name
 00000057   BCSCTL1
 00000058   BCSCTL2
 00000053   BCSCTL3
-0000e77a   BTN_init
-0000e536   BTN_read
-0000e8dc   C$$EXIT
+0000e6c6   BTN_init
+0000e4c6   BTN_read
+0000e814   C$$EXIT
 00000059   CACTL1
 0000005a   CACTL2
 000010fb   CALBC1_12MHZ
@@ -183,24 +179,24 @@ address    name
 00000223   CTR_RUNNING
 00000225   CTR_SEC
 00000056   DCOCTL
-0000e898   Data_RX
-0000e75e   Data_TX
+0000e7d0   Data_RX
+0000e6aa   Data_TX
 00000128   FCTL1
 0000012a   FCTL2
 0000012c   FCTL3
 00000212   FLASH_BTN_FUNC
 0000021e   FLASH_CTR_DELAY
-0000e8e0   FLASH_dummy
-0000e7c8   FLASH_init
+0000e818   FLASH_dummy
+0000e714   FLASH_init
 00000000   IE1
 00000002   IFG1
 0000020c   LED_FLAGS
 0000020a   LED_MINUTE
 0000020b   LED_SECOND
 0000e1ca   LED_displaydigit
-0000e7e0   MCP_Read
-0000e794   MCP_Write
-0000e660   MCP_init
+0000e72c   MCP_Read
+0000e6e0   MCP_Write
+0000e5da   MCP_init
 00000022   P1DIR
 00000025   P1IE
 00000024   P1IES
@@ -219,7 +215,6 @@ address    name
 0000002f   P2REN
 0000002e   P2SEL
 00000042   P2SEL2
-0000022e   SYSTIME_DCO_CLOCK
 00000172   TA0CCR0
 00000174   TA0CCR1
 00000176   TA0CCR2
@@ -240,7 +235,7 @@ address    name
 0000007c   USISRL
 0000e000   USI_TXRX
 00000120   WDTCTL
-0000e37e   WDT_ISR
+0000e382   WDT_ISR
 00000202   _I2C_BUFFPTR
 00000206   _I2C_BYTECOUNT
 00000208   _I2C_NUMBYTES
@@ -251,90 +246,87 @@ address    name
 00000204   _I2C_State
 00000300   __STACK_END
 00000050   __STACK_SIZE
-0000e906   __TI_CINIT_Base
-0000e90e   __TI_CINIT_Limit
-0000e8fc   __TI_Handler_Table_Base
-0000e902   __TI_Handler_Table_Limit
+0000e83e   __TI_CINIT_Base
+0000e846   __TI_CINIT_Limit
+0000e834   __TI_Handler_Table_Base
+0000e83a   __TI_Handler_Table_Limit
 UNDEFED    __TI_INITARRAY_Base
 UNDEFED    __TI_INITARRAY_Limit
 00000001   __TI_args_main
-0000e874   __TI_decompress_none
-0000e8d2   __TI_decompress_rle24
+0000e7ac   __TI_decompress_none
+0000e80a   __TI_decompress_rle24
 00000001   __TI_exit
-0000e84c   __TI_zero_init
+0000e798   __TI_zero_init
 ffffffff   __binit__
 ffffffff   __c_args__
-0000e6e8   __mspabi_divi
-0000e822   __mspabi_divu
-0000e8b4   __mspabi_func_epilog_1
-0000e8b2   __mspabi_func_epilog_2
-0000e8b0   __mspabi_func_epilog_3
-0000e8ae   __mspabi_func_epilog_4
-0000e8ac   __mspabi_func_epilog_5
-0000e8aa   __mspabi_func_epilog_6
-0000e8a8   __mspabi_func_epilog_7
-0000e860   __mspabi_mpyi
-0000e6e8   __mspabi_remi
-0000e822   __mspabi_remu
-0000e714   __mspabi_slli
-0000e73c   __mspabi_slli_1
-0000e72a   __mspabi_slli_10
-0000e728   __mspabi_slli_11
-0000e726   __mspabi_slli_12
-0000e724   __mspabi_slli_13
-0000e722   __mspabi_slli_14
-0000e720   __mspabi_slli_15
-0000e73a   __mspabi_slli_2
-0000e738   __mspabi_slli_3
-0000e736   __mspabi_slli_4
-0000e734   __mspabi_slli_5
-0000e732   __mspabi_slli_6
-0000e730   __mspabi_slli_7
-0000e72e   __mspabi_slli_8
-0000e72c   __mspabi_slli_9
-0000e6bc   __mspabi_srai
-0000e6e4   __mspabi_srai_1
-0000e6d2   __mspabi_srai_10
-0000e6d0   __mspabi_srai_11
-0000e6ce   __mspabi_srai_12
-0000e6cc   __mspabi_srai_13
-0000e6ca   __mspabi_srai_14
-0000e6c8   __mspabi_srai_15
-0000e6e2   __mspabi_srai_2
-0000e6e0   __mspabi_srai_3
-0000e6de   __mspabi_srai_4
-0000e6dc   __mspabi_srai_5
-0000e6da   __mspabi_srai_6
-0000e6d8   __mspabi_srai_7
-0000e6d6   __mspabi_srai_8
-0000e6d4   __mspabi_srai_9
-0000e4d8   _auto_init
+0000e634   __mspabi_divi
+0000e76e   __mspabi_divu
+0000e7ec   __mspabi_func_epilog_1
+0000e7ea   __mspabi_func_epilog_2
+0000e7e8   __mspabi_func_epilog_3
+0000e7e6   __mspabi_func_epilog_4
+0000e7e4   __mspabi_func_epilog_5
+0000e7e2   __mspabi_func_epilog_6
+0000e7e0   __mspabi_func_epilog_7
+0000e634   __mspabi_remi
+0000e76e   __mspabi_remu
+0000e660   __mspabi_slli
+0000e688   __mspabi_slli_1
+0000e676   __mspabi_slli_10
+0000e674   __mspabi_slli_11
+0000e672   __mspabi_slli_12
+0000e670   __mspabi_slli_13
+0000e66e   __mspabi_slli_14
+0000e66c   __mspabi_slli_15
+0000e686   __mspabi_slli_2
+0000e684   __mspabi_slli_3
+0000e682   __mspabi_slli_4
+0000e680   __mspabi_slli_5
+0000e67e   __mspabi_slli_6
+0000e67c   __mspabi_slli_7
+0000e67a   __mspabi_slli_8
+0000e678   __mspabi_slli_9
+0000e608   __mspabi_srai
+0000e630   __mspabi_srai_1
+0000e61e   __mspabi_srai_10
+0000e61c   __mspabi_srai_11
+0000e61a   __mspabi_srai_12
+0000e618   __mspabi_srai_13
+0000e616   __mspabi_srai_14
+0000e614   __mspabi_srai_15
+0000e62e   __mspabi_srai_2
+0000e62c   __mspabi_srai_3
+0000e62a   __mspabi_srai_4
+0000e628   __mspabi_srai_5
+0000e626   __mspabi_srai_6
+0000e624   __mspabi_srai_7
+0000e622   __mspabi_srai_8
+0000e620   __mspabi_srai_9
+0000e468   _auto_init
 0000021a   _btn_count
-00000232   _btn_state
-0000e7ae   _c_int00
-0000e7ae   _c_int00_noexit
+00000230   _btn_state
+0000e6fa   _c_int00
+0000e6fa   _c_int00_noexit
 00000226   _ctr_wdt_count
-00000230   _digit_count
+0000022e   _digit_count
 0000020e   _disp_buff
 0000fffe   _reset_vector
 000002b0   _stack
-0000e8d8   _system_pre_init
-0000e8dc   abort
+0000e810   _system_pre_init
+0000e814   abort
 ffffffff   binit
-0000e624   ctr_down
-0000e8b8   ctr_init
-0000e7f6   ctr_start
-0000e80c   ctr_stop
-0000e838   ctr_up
-0000e592   i2c_init
-0000e5e6   i2c_reg_read
-0000e740   i2c_transmit
+0000e59e   ctr_down
+0000e7f0   ctr_init
+0000e742   ctr_start
+0000e758   ctr_stop
+0000e784   ctr_up
+0000e522   i2c_init
+0000e560   i2c_reg_read
+0000e68c   i2c_transmit
 0000e2b0   main
-0000e886   memcpy
-0000e8e2   segments
-0000e406   set_dco
-0000e8c6   start_5min_count
-0000e68e   timer_a_i2c_100k
+0000e7be   memcpy
+0000e81a   segments
+0000e7fe   start_5min_count
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -423,9 +415,8 @@ address    name
 00000228   _I2C_OPERATION
 0000022a   _I2C_SLAVE_PRESENT
 0000022c   _I2C_RPT_START
-0000022e   SYSTIME_DCO_CLOCK
-00000230   _digit_count
-00000232   _btn_state
+0000022e   _digit_count
+00000230   _btn_state
 000002b0   _stack
 00000300   __STACK_END
 000010f8   CALDCO_16MHZ
@@ -439,86 +430,83 @@ address    name
 0000e000   USI_TXRX
 0000e1ca   LED_displaydigit
 0000e2b0   main
-0000e37e   WDT_ISR
-0000e406   set_dco
-0000e4d8   _auto_init
-0000e536   BTN_read
-0000e592   i2c_init
-0000e5e6   i2c_reg_read
-0000e624   ctr_down
-0000e660   MCP_init
-0000e68e   timer_a_i2c_100k
-0000e6bc   __mspabi_srai
-0000e6c8   __mspabi_srai_15
-0000e6ca   __mspabi_srai_14
-0000e6cc   __mspabi_srai_13
-0000e6ce   __mspabi_srai_12
-0000e6d0   __mspabi_srai_11
-0000e6d2   __mspabi_srai_10
-0000e6d4   __mspabi_srai_9
-0000e6d6   __mspabi_srai_8
-0000e6d8   __mspabi_srai_7
-0000e6da   __mspabi_srai_6
-0000e6dc   __mspabi_srai_5
-0000e6de   __mspabi_srai_4
-0000e6e0   __mspabi_srai_3
-0000e6e2   __mspabi_srai_2
-0000e6e4   __mspabi_srai_1
-0000e6e8   __mspabi_divi
-0000e6e8   __mspabi_remi
-0000e714   __mspabi_slli
-0000e720   __mspabi_slli_15
-0000e722   __mspabi_slli_14
-0000e724   __mspabi_slli_13
-0000e726   __mspabi_slli_12
-0000e728   __mspabi_slli_11
-0000e72a   __mspabi_slli_10
-0000e72c   __mspabi_slli_9
-0000e72e   __mspabi_slli_8
-0000e730   __mspabi_slli_7
-0000e732   __mspabi_slli_6
-0000e734   __mspabi_slli_5
-0000e736   __mspabi_slli_4
-0000e738   __mspabi_slli_3
-0000e73a   __mspabi_slli_2
-0000e73c   __mspabi_slli_1
-0000e740   i2c_transmit
-0000e75e   Data_TX
-0000e77a   BTN_init
-0000e794   MCP_Write
-0000e7ae   _c_int00
-0000e7ae   _c_int00_noexit
-0000e7c8   FLASH_init
-0000e7e0   MCP_Read
-0000e7f6   ctr_start
-0000e80c   ctr_stop
-0000e822   __mspabi_divu
-0000e822   __mspabi_remu
-0000e838   ctr_up
-0000e84c   __TI_zero_init
-0000e860   __mspabi_mpyi
-0000e874   __TI_decompress_none
-0000e886   memcpy
-0000e898   Data_RX
-0000e8a8   __mspabi_func_epilog_7
-0000e8aa   __mspabi_func_epilog_6
-0000e8ac   __mspabi_func_epilog_5
-0000e8ae   __mspabi_func_epilog_4
-0000e8b0   __mspabi_func_epilog_3
-0000e8b2   __mspabi_func_epilog_2
-0000e8b4   __mspabi_func_epilog_1
-0000e8b8   ctr_init
-0000e8c6   start_5min_count
-0000e8d2   __TI_decompress_rle24
-0000e8d8   _system_pre_init
-0000e8dc   C$$EXIT
-0000e8dc   abort
-0000e8e0   FLASH_dummy
-0000e8e2   segments
-0000e8fc   __TI_Handler_Table_Base
-0000e902   __TI_Handler_Table_Limit
-0000e906   __TI_CINIT_Base
-0000e90e   __TI_CINIT_Limit
+0000e382   WDT_ISR
+0000e468   _auto_init
+0000e4c6   BTN_read
+0000e522   i2c_init
+0000e560   i2c_reg_read
+0000e59e   ctr_down
+0000e5da   MCP_init
+0000e608   __mspabi_srai
+0000e614   __mspabi_srai_15
+0000e616   __mspabi_srai_14
+0000e618   __mspabi_srai_13
+0000e61a   __mspabi_srai_12
+0000e61c   __mspabi_srai_11
+0000e61e   __mspabi_srai_10
+0000e620   __mspabi_srai_9
+0000e622   __mspabi_srai_8
+0000e624   __mspabi_srai_7
+0000e626   __mspabi_srai_6
+0000e628   __mspabi_srai_5
+0000e62a   __mspabi_srai_4
+0000e62c   __mspabi_srai_3
+0000e62e   __mspabi_srai_2
+0000e630   __mspabi_srai_1
+0000e634   __mspabi_divi
+0000e634   __mspabi_remi
+0000e660   __mspabi_slli
+0000e66c   __mspabi_slli_15
+0000e66e   __mspabi_slli_14
+0000e670   __mspabi_slli_13
+0000e672   __mspabi_slli_12
+0000e674   __mspabi_slli_11
+0000e676   __mspabi_slli_10
+0000e678   __mspabi_slli_9
+0000e67a   __mspabi_slli_8
+0000e67c   __mspabi_slli_7
+0000e67e   __mspabi_slli_6
+0000e680   __mspabi_slli_5
+0000e682   __mspabi_slli_4
+0000e684   __mspabi_slli_3
+0000e686   __mspabi_slli_2
+0000e688   __mspabi_slli_1
+0000e68c   i2c_transmit
+0000e6aa   Data_TX
+0000e6c6   BTN_init
+0000e6e0   MCP_Write
+0000e6fa   _c_int00
+0000e6fa   _c_int00_noexit
+0000e714   FLASH_init
+0000e72c   MCP_Read
+0000e742   ctr_start
+0000e758   ctr_stop
+0000e76e   __mspabi_divu
+0000e76e   __mspabi_remu
+0000e784   ctr_up
+0000e798   __TI_zero_init
+0000e7ac   __TI_decompress_none
+0000e7be   memcpy
+0000e7d0   Data_RX
+0000e7e0   __mspabi_func_epilog_7
+0000e7e2   __mspabi_func_epilog_6
+0000e7e4   __mspabi_func_epilog_5
+0000e7e6   __mspabi_func_epilog_4
+0000e7e8   __mspabi_func_epilog_3
+0000e7ea   __mspabi_func_epilog_2
+0000e7ec   __mspabi_func_epilog_1
+0000e7f0   ctr_init
+0000e7fe   start_5min_count
+0000e80a   __TI_decompress_rle24
+0000e810   _system_pre_init
+0000e814   C$$EXIT
+0000e814   abort
+0000e818   FLASH_dummy
+0000e81a   segments
+0000e834   __TI_Handler_Table_Base
+0000e83a   __TI_Handler_Table_Limit
+0000e83e   __TI_CINIT_Base
+0000e846   __TI_CINIT_Limit
 0000fffe   _reset_vector
 ffffffff   __binit__
 ffffffff   __c_args__
@@ -526,4 +514,4 @@ ffffffff   binit
 UNDEFED    __TI_INITARRAY_Base
 UNDEFED    __TI_INITARRAY_Limit
 
-[184 symbols]
+[180 symbols]

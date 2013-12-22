@@ -51,7 +51,6 @@
  */
 
 #include <msp430.h>
-#include "systime.h"
 
 
 // depricated definitions
@@ -84,11 +83,6 @@ void Data_RX (void);
 // Public functions
 void i2c_init(char int_pullup)
 {
-	if(SYSTIME_DCO_CLOCK == 0)			// If system clock is not initialized by systime.c routines
-	{
-		set_dco(1);						// set DCO to 1MHz
-	}
-	timer_a_i2c_100k();					// set timer to provide 100kHz I2C clock
 	if(int_pullup)						// setup internal pullup
 	{
 		P1OUT |= 0xC0;                  // P1.6 & P1.7 Pullups
@@ -100,7 +94,7 @@ void i2c_init(char int_pullup)
 	USICTL1 = USII2C + USIIE;                   // Enable I2C mode & USI interrupt
 
 //	USICKCTL = USIDIV_1 + USISSEL_5 + USICKPL;    // USI clk: SCL = TACCR0
-	USICKCTL = USIDIV_7 + USISSEL_2 + USICKPL;    // USI clk: SCL = SMCLK
+	USICKCTL = USIDIV_7 + USISSEL_2 + USICKPL;    // USI clk: SCL = SMCLK (USI clock: 12MHz/128 = ~100kHz)
 
 	USICNT |= USIIFGCC;                       // Disable automatic clear control
 	USICTL0 &= ~USISWRST;                     // Enable USI
