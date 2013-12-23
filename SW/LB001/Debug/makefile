@@ -10,6 +10,7 @@ ORDERED_OBJS += \
 $(GEN_CMDS__FLAG) \
 "./textconv.obj" \
 "./serial.obj" \
+"./menu.obj" \
 "./main.obj" \
 "./i2c_usi.obj" \
 "./flash.obj" \
@@ -130,8 +131,8 @@ LB001.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(MSP430_EXECUTABLE_OUTPUTS__QUOTED) "LB001.out"
-	-$(RM) "LED.pp" "MCP23017.pp" "button.pp" "counter.pp" "flash.pp" "i2c_usi.pp" "main.pp" "serial.pp" "textconv.pp" 
-	-$(RM) "LED.obj" "MCP23017.obj" "button.obj" "counter.obj" "flash.obj" "i2c_usi.obj" "main.obj" "serial.obj" "textconv.obj" 
+	-$(RM) "LED.pp" "MCP23017.pp" "button.pp" "counter.pp" "flash.pp" "i2c_usi.pp" "main.pp" "menu.pp" "serial.pp" "textconv.pp" 
+	-$(RM) "LED.obj" "MCP23017.obj" "button.obj" "counter.obj" "flash.obj" "i2c_usi.obj" "main.obj" "menu.obj" "serial.obj" "textconv.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

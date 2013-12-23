@@ -6,16 +6,25 @@
 #include "button.h"
 #include "flash.h"
 #include "serial.h"
+#include "menu.h"
 
 /*
  * main.c
  */
 
+
+int start_count_value;
+void start_count()
+{
+	ctr_start(start_count_value,0);
+}
+
+/*
 void start_5min_count()
 {
 	ctr_start(5,0);
 }
-
+*/
 int main(void) {
     WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
     // Set 12MHz clock
@@ -49,16 +58,17 @@ int main(void) {
 
 	unsigned char buttonstate = 0;
 	unsigned char buttonvalue = 0;
-
+/*
 	unsigned char prev_min = 0;
 	unsigned char prev_sec = 0;
-
+*/
 	FLASH_init();
 
 	FLASH_BTN_FUNC[0] = ctr_up;
 	FLASH_BTN_FUNC[1] = ctr_down;
 	FLASH_BTN_FUNC[2] = ctr_stop;
-	FLASH_BTN_FUNC[3] = start_5min_count;
+	FLASH_BTN_FUNC[3] = start_count;
+	FLASH_BTN_DATA[3] = 5;
 
 	MCP_init(1, 1);
 	BTN_init();
@@ -67,17 +77,19 @@ int main(void) {
 	// ctr_start(2,0);
 	serial_init();
 
-    TimerA_UART_print("\x1B[2JLB001 USB - READY.\r\n");
+    // TimerA_UART_print("\x1B[2JLB001 USB - READY.\r\n");
 
 	unsigned char i;
 
 	while(1)
 	{
+		check_input();
 		if(CTR_DISP)
 		{
 			LED_MINUTE = CTR_MIN;
 			LED_SECOND = CTR_SEC;
 			LED_FLAGS = LED_EN_MIN + LED_EN_SEC + LED_UD + LED_LD;
+			/*
 			if(prev_min != CTR_MIN || prev_sec != CTR_SEC)
 			{
 				TimerA_UART_tx((CTR_MIN / 10) + 0x30);
@@ -89,14 +101,17 @@ int main(void) {
 				prev_min = CTR_MIN;
 				prev_sec = CTR_SEC;
 			}
+			*/
 		}
 		else
 		{
 			LED_MINUTE = 0;
 			LED_SECOND = 0;
 			LED_FLAGS = 0;
+			/*
 			prev_min = 0;
 			prev_sec = 0;
+			*/
 		}
 		LED_displaydigit();
 		// button handling
@@ -106,6 +121,7 @@ int main(void) {
 			if((buttonstate & (1 << i)) == 0 && (buttonvalue & (1 << i)) > 0)
 			{
 				// ctr_stop();
+				start_count_value = FLASH_BTN_DATA[i];
 				FLASH_BTN_FUNC[i]();
 			}
 		}
