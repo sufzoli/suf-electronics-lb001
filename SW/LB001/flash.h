@@ -11,6 +11,9 @@
 typedef void (*void_func_ptr)(void);
 extern void_func_ptr FLASH_BTN_FUNC[];
 extern int FLASH_BTN_DATA[];
+extern unsigned char FLASH_FLAGS;
+extern unsigned char FLASH_BEEP_LEN;
+extern unsigned char FLASH_BEEP_VOL;
 void FLASH_init();
 void FLASH_dummy();
 

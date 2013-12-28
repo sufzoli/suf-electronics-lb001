@@ -11,7 +11,10 @@
 extern unsigned char CTR_MIN;
 extern unsigned char CTR_SEC;
 extern unsigned char CTR_RUNNING;
+extern unsigned char CTR_ON;
 extern unsigned char CTR_DISP;
+extern unsigned char CTR_BEEPTRIGGER;
+
 
 void ctr_init();
 void ctr_up();

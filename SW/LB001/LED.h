@@ -18,6 +18,6 @@ extern unsigned char LED_FLAGS;
 #define LED_LD	0x01
 
 void LED_displaydigit();
-
+void LED_off();
 
 #endif /* LED_H_ */

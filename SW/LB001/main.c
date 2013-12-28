@@ -1,4 +1,5 @@
 #include <msp430.h>
+#include "main.h"
 #include "i2c_usi.h"
 #include "MCP23017.h"
 #include "LED.h"
@@ -7,6 +8,7 @@
 #include "flash.h"
 #include "serial.h"
 #include "menu.h"
+
 
 /*
  * main.c
@@ -25,6 +27,26 @@ void start_5min_count()
 	ctr_start(5,0);
 }
 */
+
+void beep()
+{
+	unsigned int j;
+	unsigned char k;
+	j = FLASH_BEEP_LEN;
+	P1DIR |= BUZZER_PIN;
+	P1SEL &= ~BUZZER_PIN;
+	P1SEL2 &= ~BUZZER_PIN;
+	for(j *= 4000; j > 0 ; j--)
+	{
+		P1OUT |= BUZZER_PIN;
+		for(k = 0; k < FLASH_BEEP_VOL; k++)
+			_delay_cycles(140);
+		P1OUT &= ~BUZZER_PIN;
+		for(k = 0; k < 20 - FLASH_BEEP_VOL; k++)
+			_delay_cycles(140);
+	}
+}
+
 int main(void) {
     WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
     // Set 12MHz clock
@@ -79,11 +101,31 @@ int main(void) {
 
     // TimerA_UART_print("\x1B[2JLB001 USB - READY.\r\n");
 
+	// set output pin: P1.0
+	P1DIR |= BIT0;
+	P1SEL &= ~BIT0;
+	P1SEL2 &= ~BIT0;
+
 	unsigned char i;
 
 	while(1)
 	{
 		check_input();
+		// Set output state
+		if(CTR_ON != (FLASH_FLAGS & 0x01))
+		{
+			P1OUT |= BIT0;
+		}
+		else
+		{
+			P1OUT &= ~BIT0;
+		}
+		if(CTR_BEEPTRIGGER)
+		{
+			CTR_BEEPTRIGGER = 0;
+			LED_off();
+			beep();
+		}
 		if(CTR_DISP)
 		{
 			LED_MINUTE = CTR_MIN;

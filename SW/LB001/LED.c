@@ -37,4 +37,9 @@ void LED_displaydigit()
 	_digit_count = (_digit_count == 3) ? 0 : ++_digit_count;
 }
 
+void LED_off()
+{
+	MCP_Write(MCP_GPIOA, 0);
+}
+
 

@@ -8,6 +8,11 @@
 
 void_func_ptr FLASH_BTN_FUNC[4];
 int FLASH_BTN_DATA[4];
+unsigned char FLASH_FLAGS = 0;
+unsigned char FLASH_BEEP_LEN = 2;
+unsigned char FLASH_BEEP_VOL = 10;
+// Flags:
+// 0 - Output Polarity (0 - Active High, 1 - Active Low)
 
 void FLASH_dummy() {}
 void FLASH_init()
