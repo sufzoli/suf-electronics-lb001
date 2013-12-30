@@ -17,8 +17,12 @@
 //------------------------------------------------------------------------------
 // Conditions for 9600 Baud SW UART, SMCLK = 12MHz
 //------------------------------------------------------------------------------
-#define UART_TBIT_DIV_2     (12000000 / (9600 * 2))
-#define UART_TBIT           (12000000 / 9600)
+// #define UART_TBIT_DIV_2     (12000000 / (9600 * 2))
+// #define UART_TBIT           (12000000 / 9600)
+
+#define UART_TBIT_DIV_2     (12000000 / (115200 * 2))
+#define UART_TBIT           (12000000 / 115200)
+
 
 extern unsigned char rxBuffer;
 extern unsigned char rxBuffLen;

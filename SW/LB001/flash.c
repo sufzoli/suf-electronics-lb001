@@ -17,12 +17,23 @@ unsigned char FLASH_BEEP_VOL = 10;
 void FLASH_dummy() {}
 void FLASH_init()
 {
+	// Setup the flash timer
+	// bit
+	// 7-6 - 01 - MCLK
+	// 5-0 - 1E - Divider 30 (assuming the 12MHz master clock the timing will be ~400kHz)
+//	FCTL2 = FWKEY + FSSEL0 + 0x1E;
+
+
 	unsigned char i;
 	for(i=0;i<4;i++)
 	{
 		FLASH_BTN_FUNC[i] = FLASH_dummy;
 		FLASH_BTN_DATA[i] = 0;
 	}
+}
+
+void FLASH_erase()
+{
 }
 
 

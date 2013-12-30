@@ -10,6 +10,7 @@
 #include "flash.h"
 #include "counter.h"
 #include "main.h"
+#include "textconv.h"
 
 const void_func_ptr btn_func_list[] = { FLASH_dummy, ctr_up, ctr_down, ctr_stop,  start_count };
 char * btn_func_names[] = { "Empty", "Counter Up", "Counter Down", "Counter Stop",  "Counter Start" };
@@ -83,14 +84,41 @@ void insert_write(char *text, char *insertionstrings[])
 }
 */
 
+void menu_init()
+{
+	unsigned char i, j, flash_invalid;
+	for(i = 0;i < 4;i++)
+	{
+		for(j = 0; j < 5; j++)
+		{
+			flash_invalid = 1;
+			if(FLASH_BTN_FUNC[i] ==  btn_func_list[j])
+			{
+				flash_invalid = 0;
+			}
+		}
+		if(flash_invalid)
+		{
+			break;
+		}
+	}
+	if(flash_invalid)
+	{
+		FLASH_clear();
+
+	}
+}
+
+
 void menu_print(char menunum)
 {
 	unsigned char i, j;
+	char minstr[4];
 	switch(menunum)
 	{
 		case 0:	// main menu
 			TimerA_UART_print("\x1B[2J\r");
-			for(i = 0;i < 4;i++)
+			for(i = 0;i < BTN_Count;i++)
 			{
 				TimerA_UART_tx(i + 0x31);
 				TimerA_UART_print(") Change button ");
@@ -103,12 +131,20 @@ void menu_print(char menunum)
 						TimerA_UART_print(btn_func_names[j]);
 						if(j == 4)
 						{
-							TimerA_UART_print(" ( min)");
+							TimerA_UART_print(" (");
+							TimerA_UART_print(ByteToStr(FLASH_BTN_DATA[i], minstr));
+							TimerA_UART_print(" min)");
 						}
 					}
 				}
 				TimerA_UART_print("\r\n");
 			}
+			TimerA_UART_tx(i++ + 0x31);
+			TimerA_UART_print(") Beep length\r\n");
+			TimerA_UART_tx(i++ + 0x31);
+			TimerA_UART_print(") Beep volume\r\n");
+			TimerA_UART_tx(i++ + 0x31);
+			TimerA_UART_print(") Output polarity\r\n");
 			print_input_prompt();
 			break;
 	}

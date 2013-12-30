@@ -41,3 +41,18 @@ void IntToBCD(unsigned int len, unsigned char str[], unsigned int src, unsigned 
 	}
 	return;
 }
+
+char * ByteToStr(char src, char str[])
+{
+// 	unsigned char str[4];
+	str += 3;
+	*str = 0;
+	do
+	{
+		str--;
+		*str = (src % 10) + 0x30;
+		src /= 10;
+	}
+	while(src);
+	return str;
+}

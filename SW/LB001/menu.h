@@ -8,6 +8,8 @@
 #ifndef MENU_H_
 #define MENU_H_
 
+#define BTN_Count 4
+
 typedef const char * string;
 
 void check_input();

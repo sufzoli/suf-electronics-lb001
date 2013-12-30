@@ -6,6 +6,7 @@ menu.obj: ../serial.h
 menu.obj: ../flash.h
 menu.obj: ../counter.h
 menu.obj: ../main.h
+menu.obj: ../textconv.h
 
 ../menu.c: 
 ../menu.h: 
@@ -13,3 +14,4 @@ menu.obj: ../main.h
 ../flash.h: 
 ../counter.h: 
 ../main.h: 
+../textconv.h: 
