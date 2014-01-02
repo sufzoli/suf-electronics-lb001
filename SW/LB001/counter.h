@@ -16,10 +16,10 @@ extern unsigned char CTR_DISP;
 extern unsigned char CTR_BEEPTRIGGER;
 
 
-void ctr_init();
-void ctr_up();
-void ctr_down();
-void ctr_stop();
-void ctr_start(unsigned char min, unsigned char sec);
+void CTR_init();
+void CTR_up();
+void CTR_down();
+void CTR_stop();
+void CTR_start(unsigned char min, unsigned char sec);
 
 #endif /* COUNTER_H_ */

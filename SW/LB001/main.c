@@ -18,7 +18,7 @@
 int start_count_value;
 void start_count()
 {
-	ctr_start(start_count_value,0);
+	CTR_start(start_count_value,0);
 }
 
 /*
@@ -84,18 +84,29 @@ int main(void) {
 	unsigned char prev_min = 0;
 	unsigned char prev_sec = 0;
 */
+	MENU_init();
 	FLASH_init();
 
-	FLASH_BTN_FUNC[0] = ctr_up;
-	FLASH_BTN_FUNC[1] = ctr_down;
-	FLASH_BTN_FUNC[2] = ctr_stop;
+	FLASH_BTN_FUNC[0] = CTR_up;
+	FLASH_BTN_FUNC[1] = CTR_down;
+	FLASH_BTN_FUNC[2] = CTR_stop;
 	FLASH_BTN_FUNC[3] = start_count;
 	FLASH_BTN_DATA[3] = 5;
 
 	MCP_init(1, 1);
 	BTN_init();
 
-	ctr_init();
+	CTR_init();
+
+	MENU_btn_vector_data_descriptor start_data_descriptor_data;
+	MENU_btn_vector_data_descriptor * start_data_descriptor = &start_data_descriptor_data;
+
+	start_data_descriptor->is_unit_postfix = 1;
+	start_data_descriptor->unit = " min";
+	start_data_descriptor->input_question = "Enter the counter time in minutes: ";
+
+	MENU_add_btn_vector(start_count, "Counter Start", start_data_descriptor);
+
 	// ctr_start(2,0);
 	serial_init();
 

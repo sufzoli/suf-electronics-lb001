@@ -5,6 +5,8 @@
  *      Author: zoli
  */
 #include <msp430.h>
+#include "counter.h"
+#include "menu.h"
 
 unsigned char FLASH_CTR_DELAY = 5;
 
@@ -20,8 +22,12 @@ unsigned char _ctr_wdt_count = 0;
 
 
 // Setup the Watchdog timer
-void ctr_init()
+void CTR_init()
 {
+	MENU_add_btn_vector(CTR_up, "Counter Up", 0);
+	MENU_add_btn_vector(CTR_down, "Counter Down", 0);
+	MENU_add_btn_vector(CTR_stop, "Counter Stop", 0);
+
 	// Setup Watchdog timer to provide the measurement time
     // WDTSSEL -  1 - Source ACLK (~12 kHz VLO)
 	// WDTISx -  01 - clock/8192 (4 Hz)
@@ -29,10 +35,9 @@ void ctr_init()
     WDTCTL = WDTPW | WDTSSEL | WDTTMSEL | WDTIS0;
     IE1 |= WDTIE; // Enable WDT interrupt
     _EINT();	// Enable interrupts
-
 }
 
-void ctr_up()
+void CTR_up()
 {
 	CTR_BEEPTRIGGER = 0;
 	CTR_DELAY = FLASH_CTR_DELAY;
@@ -46,7 +51,7 @@ void ctr_up()
 	CTR_SEC = 0;
 }
 
-void ctr_down()
+void CTR_down()
 {
 	CTR_BEEPTRIGGER = 0;
 	if(CTR_SEC > 0)
@@ -73,7 +78,7 @@ void ctr_down()
 	}
 }
 
-void ctr_start(unsigned char min, unsigned char sec)
+void CTR_start(unsigned char min, unsigned char sec)
 {
 	CTR_ON = 1;
 	CTR_MIN = min;
@@ -82,7 +87,7 @@ void ctr_start(unsigned char min, unsigned char sec)
 	CTR_BEEPTRIGGER = 0;
 }
 
-void ctr_stop()
+void CTR_stop()
 {
 	// Stop condition
 	CTR_MIN = 0;

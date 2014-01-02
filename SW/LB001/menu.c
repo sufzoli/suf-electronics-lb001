@@ -6,23 +6,45 @@
  */
 
 #include "menu.h"
-#include "serial.h"
+#include "config.h"
 #include "flash.h"
-#include "counter.h"
-#include "main.h"
+#include "serial.h"
 #include "textconv.h"
 
-const void_func_ptr btn_func_list[] = { FLASH_dummy, ctr_up, ctr_down, ctr_stop,  start_count };
-char * btn_func_names[] = { "Empty", "Counter Up", "Counter Down", "Counter Stop",  "Counter Start" };
+
+// #include "counter.h"
+// #include "main.h"
+
+// void_func_ptr btn_func_list[] = { FLASH_dummy, CTR_up, CTR_down, CTR_stop,  start_count };
+// char * btn_func_names[] = { "Empty", "Counter Up", "Counter Down", "Counter Stop",  "Counter Start" };
+void_func_ptr btn_func_list[CONFIG_BTN_VECTOR_MAX];
+char * btn_func_names[CONFIG_BTN_VECTOR_MAX];
+MENU_btn_vector_data_descriptor * btn_func_data[CONFIG_BTN_VECTOR_MAX];
+char btn_func_count = 0;
+
+
+
 signed char context = -1;
 unsigned char menubuff[10];
 unsigned char menulen = 0;
 
 signed char input_value;
 
+
+void MENU_add_btn_vector(void_func_ptr btn_vector, char * btn_descriptor, MENU_btn_vector_data_descriptor * btn_data)
+{
+	btn_func_list[btn_func_count] = btn_vector;
+	btn_func_names[btn_func_count] = btn_descriptor;
+	btn_func_data[btn_func_count] = btn_data;
+	btn_func_count++;
+}
+
+
+
+
 char validate_input(char input_char)
 {
-	string validator = "0123456789\r\x08";
+	char * validator = "0123456789\r\x08";
 	while(*validator)
 	{
 		if(input_char == *validator++)
@@ -84,12 +106,16 @@ void insert_write(char *text, char *insertionstrings[])
 }
 */
 
-void menu_init()
+void MENU_btn_dummy_vector() {}
+
+void MENU_init()
 {
+	MENU_add_btn_vector(MENU_btn_dummy_vector, "Empty", 0);
+/*
 	unsigned char i, j, flash_invalid;
 	for(i = 0;i < 4;i++)
 	{
-		for(j = 0; j < 5; j++)
+		for(j = 0; j < btn_func_count; j++)
 		{
 			flash_invalid = 1;
 			if(FLASH_BTN_FUNC[i] ==  btn_func_list[j])
@@ -107,6 +133,7 @@ void menu_init()
 		FLASH_clear();
 
 	}
+*/
 }
 
 
@@ -118,23 +145,39 @@ void menu_print(char menunum)
 	{
 		case 0:	// main menu
 			TimerA_UART_print("\x1B[2J\r");
-			for(i = 0;i < BTN_Count;i++)
+			for(i = 0;i < CONFIG_BTN_COUNT;i++)
 			{
 				TimerA_UART_tx(i + 0x31);
 				TimerA_UART_print(") Change button ");
 				TimerA_UART_tx(i + 0x31);
 				TimerA_UART_print(". function: ");
-				for(j = 0; j < 5; j++)
+				for(j = 0; j < btn_func_count; j++)
 				{
 					if(FLASH_BTN_FUNC[i] ==  btn_func_list[j])
 					{
 						TimerA_UART_print(btn_func_names[j]);
+						if(btn_func_data[j] != 0)
+						{
+							TimerA_UART_print(" (");
+							if(!btn_func_data[j]->is_unit_postfix)
+							{
+								TimerA_UART_print(btn_func_data[j]->unit);
+							}
+							TimerA_UART_print(ByteToStr(FLASH_BTN_DATA[i], minstr));
+							if(btn_func_data[j]->is_unit_postfix)
+							{
+								TimerA_UART_print(btn_func_data[j]->unit);
+							}
+							TimerA_UART_print(")");
+						}
+						/*
 						if(j == 4)
 						{
 							TimerA_UART_print(" (");
 							TimerA_UART_print(ByteToStr(FLASH_BTN_DATA[i], minstr));
 							TimerA_UART_print(" min)");
 						}
+						*/
 					}
 				}
 				TimerA_UART_print("\r\n");
@@ -145,6 +188,8 @@ void menu_print(char menunum)
 			TimerA_UART_print(") Beep volume\r\n");
 			TimerA_UART_tx(i++ + 0x31);
 			TimerA_UART_print(") Output polarity\r\n");
+			TimerA_UART_tx(i++ + 0x31);
+			TimerA_UART_print(") Save settings\r\n");
 			print_input_prompt();
 			break;
 	}
@@ -184,7 +229,7 @@ void check_input()
 											TimerA_UART_print("\r\n\r\nSelect Button ");
 											TimerA_UART_tx(input_value + 0x30);
 											TimerA_UART_print(". Function");
-											for(i = 0;i < 5;i++)
+											for(i = 0;i < btn_func_count;i++)
 											{
 												TimerA_UART_print("\r\n  ");
 												TimerA_UART_tx(i + 0x31);
@@ -201,6 +246,21 @@ void check_input()
 								case 3:
 								case 4:
 									FLASH_BTN_FUNC[context -1] = btn_func_list[input_value-1];
+									if(btn_func_data[input_value-1] != 0)	// If it has a pointer to the data handling structure
+									{
+										// Question for the function data, switch to context something - also store in the context the button number
+										// let say form 100 to 103
+										context += 99;
+										TimerA_UART_print("\r\n\r\n");
+										TimerA_UART_print(btn_func_data[input_value-1]->input_question);
+									}
+									else
+									{
+										// Back to the main menu
+										context = 0;
+										menu_print(0);
+									}
+									/*
 									if(input_value == 5)
 									{
 										// Question for the startup minute, switch to context something - also store in the context the button number
@@ -214,6 +274,7 @@ void check_input()
 										context = 0;
 										menu_print(0);
 									}
+									*/
 									break;
 								case 100:
 								case 101:
