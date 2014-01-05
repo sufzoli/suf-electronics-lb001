@@ -13,6 +13,6 @@
 
 #define CONFIG_BTN_VECTOR_MAX	10	// Maximum length of the array containing the possible vectors can be called by the buttons
 #define CONFIG_BTN_COUNT	4	// Number of the programmable buttons
-
+#define CONFIG_MENULEN_MAX	10	// Number of the maximum number of the menu elements (button functions not included)
 
 #endif /* CONFIG_H_ */

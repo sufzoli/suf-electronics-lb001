@@ -32,22 +32,26 @@ void beep()
 {
 	unsigned int j;
 	unsigned char k;
-	j = FLASH_BEEP_LEN;
+	j = RAM_CONF->BEEP_LEN;
 	P1DIR |= BUZZER_PIN;
 	P1SEL &= ~BUZZER_PIN;
 	P1SEL2 &= ~BUZZER_PIN;
 	for(j *= 4000; j > 0 ; j--)
 	{
 		P1OUT |= BUZZER_PIN;
-		for(k = 0; k < FLASH_BEEP_VOL; k++)
+		for(k = 0; k < RAM_CONF->BEEP_VOL; k++)
 			_delay_cycles(140);
 		P1OUT &= ~BUZZER_PIN;
-		for(k = 0; k < 20 - FLASH_BEEP_VOL; k++)
+		for(k = 0; k < 20 - RAM_CONF->BEEP_VOL; k++)
 			_delay_cycles(140);
 	}
 }
 
-int main(void) {
+int main(void)
+{
+	/*
+	 *  Setup clock system
+	 */
     WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
     // Set 12MHz clock
 	// DCOCTL = 0;
@@ -78,25 +82,20 @@ int main(void) {
 	// Startup Delay
 	_delay_cycles(2000);
 
-	unsigned char buttonstate = 0;
-	unsigned char buttonvalue = 0;
-/*
-	unsigned char prev_min = 0;
-	unsigned char prev_sec = 0;
-*/
-	MENU_init();
-	FLASH_init();
+	/*
+	 * Initialize various functions
+	 */
 
-	FLASH_BTN_FUNC[0] = CTR_up;
-	FLASH_BTN_FUNC[1] = CTR_down;
-	FLASH_BTN_FUNC[2] = CTR_stop;
-	FLASH_BTN_FUNC[3] = start_count;
-	FLASH_BTN_DATA[3] = 5;
+	MCP_init(1, 1);		// Initialize the I2C bus + MCP23017 chip (handling display/buttons)
+	BTN_init();			// Initialize button handling (adding settings to the MCP23017 chip)
+	FLASH_init();		// Initialize flash handling (setup the flash timing)
+	CTR_init();			// Initialize counter (configure watchdog as interval timer, adding functions to the pool)
+	SERIAL_init();		// Initialize serial communication
+	MENU_init();		// Initialize menu system (adding the dummy function to the pool)
 
-	MCP_init(1, 1);
-	BTN_init();
-
-	CTR_init();
+	/*
+	 * Adding the Counter Start function to the menu system and to the function pool
+	 */
 
 	MENU_btn_vector_data_descriptor start_data_descriptor_data;
 	MENU_btn_vector_data_descriptor * start_data_descriptor = &start_data_descriptor_data;
@@ -107,10 +106,72 @@ int main(void) {
 
 	MENU_add_btn_vector(start_count, "Counter Start", start_data_descriptor);
 
-	// ctr_start(2,0);
-	serial_init();
+	/*
+	 * Loading default settings (it will be used on configuration mismatch)
+	 */
 
-    // TimerA_UART_print("\x1B[2JLB001 USB - READY.\r\n");
+	RAM_CONF->BTN_FUNC[0] = CTR_up;
+	RAM_CONF->BTN_FUNC[1] = CTR_down;
+	RAM_CONF->BTN_FUNC[2] = CTR_stop;
+	RAM_CONF->BTN_FUNC[3] = start_count;
+	RAM_CONF->BTN_DATA[3] = 5;
+	RAM_CONF->FLAGS = 0;
+	RAM_CONF->BEEP_LEN = 2;
+	RAM_CONF->BEEP_VOL = 10;
+
+/*
+	DEFAULT_CONF->BTN_FUNC[0] = CTR_up;
+	DEFAULT_CONF->BTN_FUNC[1] = CTR_down;
+	DEFAULT_CONF->BTN_FUNC[2] = CTR_stop;
+	DEFAULT_CONF->BTN_FUNC[3] = start_count;
+	DEFAULT_CONF->BTN_DATA[3] = 5;
+	DEFAULT_CONF->FLAGS = 0;
+	DEFAULT_CONF->BEEP_LEN = 2;
+	DEFAULT_CONF->BEEP_VOL = 10;
+*/
+	/*
+	 * Loading the flash data
+	 */
+
+	// Validate the flash data
+	if(MENU_validate_flash())
+	{
+		// Valid
+		FLASH_read();
+	}
+	else
+	{
+		// Invalid
+		// Loading default settings
+		RAM_CONF->BTN_FUNC[0] = CTR_up;
+		RAM_CONF->BTN_FUNC[1] = CTR_down;
+		RAM_CONF->BTN_FUNC[2] = CTR_stop;
+		RAM_CONF->BTN_FUNC[3] = start_count;
+		RAM_CONF->BTN_DATA[3] = 5;
+		RAM_CONF->FLAGS = 0;
+		RAM_CONF->BEEP_LEN = 2;
+		RAM_CONF->BEEP_VOL = 10;
+		// Write back to the flash
+		FLASH_erase();
+		FLASH_write();
+	}
+
+
+	unsigned char buttonstate = 0;
+	unsigned char buttonvalue = 0;
+/*
+	unsigned char prev_min = 0;
+	unsigned char prev_sec = 0;
+*/
+
+
+/*
+	RAM_CONF->BTN_FUNC[0] = CTR_up;
+	RAM_CONF->BTN_FUNC[1] = CTR_down;
+	RAM_CONF->BTN_FUNC[2] = CTR_stop;
+	RAM_CONF->BTN_FUNC[3] = start_count;
+	RAM_CONF->BTN_DATA[3] = 5;
+*/
 
 	// set output pin: P1.0
 	P1DIR |= BIT0;
@@ -123,7 +184,7 @@ int main(void) {
 	{
 		check_input();
 		// Set output state
-		if(CTR_ON != (FLASH_FLAGS & 0x01))
+		if(CTR_ON != (RAM_CONF->FLAGS & 0x01))
 		{
 			P1OUT |= BIT0;
 		}
@@ -174,8 +235,8 @@ int main(void) {
 			if((buttonstate & (1 << i)) == 0 && (buttonvalue & (1 << i)) > 0)
 			{
 				// ctr_stop();
-				start_count_value = FLASH_BTN_DATA[i];
-				FLASH_BTN_FUNC[i]();
+				start_count_value = RAM_CONF->BTN_DATA[i];
+				RAM_CONF->BTN_FUNC[i]();
 			}
 		}
 		buttonstate = buttonvalue;
@@ -203,5 +264,5 @@ int main(void) {
 		_delay_cycles(2000);
 	}
 */
-	return 0;
+	// return 0;
 }

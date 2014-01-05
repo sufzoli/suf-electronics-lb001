@@ -91,7 +91,7 @@ unsigned char rxBuffer;                     // Received UART character
 unsigned char rxBuffLen;
 
 
-void serial_init()
+void SERIAL_init()
 {
     P1OUT &= ~(UART_TXD + UART_RXD);        // Initialize GPIO
     P1SEL |= UART_TXD + UART_RXD;           // Timer function for TXD/RXD pins

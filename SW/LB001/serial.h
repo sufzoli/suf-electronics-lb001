@@ -30,7 +30,7 @@ extern unsigned char rxBuffLen;
 //------------------------------------------------------------------------------
 // Function prototypes
 //------------------------------------------------------------------------------
-void serial_init();
+void SERIAL_init();
 void TimerA_UART_init(void);
 void TimerA_UART_tx(unsigned char byte);
 void TimerA_UART_print(char *string);
