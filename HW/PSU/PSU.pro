@@ -1,4 +1,4 @@
-update=20/10/2013 23:57:02
+update=05/01/2014 16:25:13
 version=1
 last_client=eeschema
 [cvpcb]
@@ -49,7 +49,7 @@ LibName17=pga_sockets
 LibName18=valves
 [eeschema]
 version=1
-LibDir=C:/DATA/Dropbox/Shared/Electronics/KiCAD/share/library
+LibDir=C:/DATA/KiCAD/library
 NetFmtName=
 RptD_X=0
 RptD_Y=100
