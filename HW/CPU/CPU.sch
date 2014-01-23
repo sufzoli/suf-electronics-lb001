@@ -3,13 +3,14 @@ LIBS:power
 LIBS:suf
 LIBS:conn
 LIBS:device
+LIBS:CPU-cache
 EELAYER 27 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title ""
-Date "5 jan 2014"
+Date "23 jan 2014"
 Rev ""
 Comp ""
 Comment1 ""
@@ -112,7 +113,7 @@ F 1 "XTAL" H 6600 2825 60  0000 C CNN
 F 2 "XTAL_KHZ" H 6600 2925 60  0001 C CNN
 F 3 "~" H 6600 2925 60  0000 C CNN
 	1    6600 2925
-	-1   0    0    1   
+	1    0    0    -1  
 $EndComp
 $Comp
 L C C1

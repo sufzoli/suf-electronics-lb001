@@ -1,7 +1,7 @@
 (export (version D)
   (design
-    (source C:\DATA\SourceControll\SUF-GitHub\Electronics\suf-electronics-lb001\HW\CPU\CPU.sch)
-    (date "05/01/2014 23:50:52")
+    (source C:/DATA/SourceControll/SUF-GitHub/Electronics/suf-electronics-lb001/HW/CPU/CPU.sch)
+    (date "23/01/2014 05:41:51")
     (tool "eeschema (2013-07-07 BZR 4022)-stable"))
   (components
     (comp (ref U2)
@@ -83,25 +83,6 @@
       (sheetpath (names /) (tstamps /))
       (tstamp 52C97BE0)))
   (libparts
-    (libpart (lib conn) (part CONN_3)
-      (description "Symbole general de connecteur")
-      (fields
-        (field (name Reference) K)
-        (field (name Value) CONN_3))
-      (pins
-        (pin (num 1) (name P1) (type passive))
-        (pin (num 2) (name PM) (type passive))
-        (pin (num 3) (name P3) (type passive))))
-    (libpart (lib conn) (part CONN_4)
-      (description "Symbole general de connecteur")
-      (fields
-        (field (name Reference) P)
-        (field (name Value) CONN_4))
-      (pins
-        (pin (num 1) (name P1) (type passive))
-        (pin (num 2) (name P2) (type passive))
-        (pin (num 3) (name P3) (type passive))
-        (pin (num 4) (name P4) (type passive))))
     (libpart (lib suf) (part C)
       (fields
         (field (name Reference) C)
@@ -111,6 +92,19 @@
       (pins
         (pin (num 1) (name ~) (type input))
         (pin (num 2) (name ~) (type input))))
+    (libpart (lib suf) (part CONRAD_USB_UART)
+      (fields
+        (field (name Reference) U)
+        (field (name Value) CONRAD_USB_UART)
+        (field (name Footprint) ~)
+        (field (name Datasheet) ~))
+      (pins
+        (pin (num 1) (name TTL_DRV) (type input))
+        (pin (num 2) (name TXD_3V3) (type output))
+        (pin (num 3) (name RXD) (type input))
+        (pin (num 4) (name TXD_5V) (type output))
+        (pin (num 5) (name GND) (type output))
+        (pin (num 6) (name VBUS) (type power_out))))
     (libpart (lib suf) (part MSP430G2553)
       (fields
         (field (name Reference) U)
@@ -165,22 +159,30 @@
       (pins
         (pin (num 1) (name ~) (type input))
         (pin (num 2) (name ~) (type unspc))))
-    (libpart (lib suf) (part CONRAD_USB_UART)
+    (libpart (lib conn) (part CONN_3)
+      (description "Symbole general de connecteur")
       (fields
-        (field (name Reference) U)
-        (field (name Value) CONRAD_USB_UART))
+        (field (name Reference) K)
+        (field (name Value) CONN_3))
       (pins
-        (pin (num 1) (name TTL_DRV) (type input))
-        (pin (num 2) (name TXD_3V3) (type output))
-        (pin (num 3) (name RXD) (type input))
-        (pin (num 4) (name TXD_5V) (type output))
-        (pin (num 5) (name GND) (type output))
-        (pin (num 6) (name VBUS) (type power_out)))))
+        (pin (num 1) (name P1) (type passive))
+        (pin (num 2) (name PM) (type passive))
+        (pin (num 3) (name P3) (type passive))))
+    (libpart (lib conn) (part CONN_4)
+      (description "Symbole general de connecteur")
+      (fields
+        (field (name Reference) P)
+        (field (name Value) CONN_4))
+      (pins
+        (pin (num 1) (name P1) (type passive))
+        (pin (num 2) (name P2) (type passive))
+        (pin (num 3) (name P3) (type passive))
+        (pin (num 4) (name P4) (type passive)))))
   (libraries
-    (library (logical conn)
-      (uri "C:\\Program Files (x86)\\KiCad\\share\\library\\conn.lib"))
     (library (logical suf)
-      (uri C:\DATA\KiCAD\library\suf.lib)))
+      (uri C:\DATA\KiCAD\library\suf.lib))
+    (library (logical conn)
+      (uri C:\DATA\KiCAD\library\conn.lib)))
   (nets
     (net (code 1) (name "")
       (node (ref U2) (pin 2))
@@ -232,10 +234,10 @@
     (net (code 13) (name "")
       (node (ref U2) (pin 19))
       (node (ref C1) (pin 2))
-      (node (ref X1) (pin 1)))
+      (node (ref X1) (pin 2)))
     (net (code 14) (name "")
-      (node (ref X1) (pin 2))
       (node (ref C3) (pin 2))
+      (node (ref X1) (pin 1))
       (node (ref U2) (pin 18)))
     (net (code 15) (name "")
       (node (ref U2) (pin 10)))
