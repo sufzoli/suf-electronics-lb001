@@ -3,7 +3,7 @@
   (general
     (links 30)
     (no_connects 0)
-    (area 141.586934 101.4816 208.413066 154.974)
+    (area 141.586934 95.4816 208.413066 148.974)
     (thickness 1.6)
     (drawings 5)
     (tracks 92)
@@ -12,7 +12,7 @@
     (nets 14)
   )
 
-  (page A3)
+  (page A4)
   (layers
     (15 F.Cu signal)
     (0 B.Cu signal)
