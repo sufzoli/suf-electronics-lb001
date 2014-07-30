@@ -1,6 +1,6 @@
-update=05/01/2014 17:19:06
+update=27/01/2014 05:20:31
 version=1
-last_client=pcbnew
+last_client=eeschema
 [cvpcb]
 version=1
 NetIExt=net
@@ -8,19 +8,6 @@ NetIExt=net
 EquName1=devcms
 [general]
 version=1
-[eeschema]
-version=1
-LibDir=C:/DATA/KiCAD/library
-NetFmtName=
-RptD_X=0
-RptD_Y=100
-RptLab=1
-LabSize=60
-[eeschema/libraries]
-LibName1=power
-LibName2=suf
-LibName3=conn
-LibName4=device
 [pcbnew]
 version=1
 LastNetListRead=
@@ -50,3 +37,16 @@ LibName5=smd
 LibName6=SOB
 LibName7=BreadBoard
 LibName8=DIP
+[eeschema]
+version=1
+LibDir=C:/DATA/KiCAD/library
+NetFmtName=
+RptD_X=0
+RptD_Y=100
+RptLab=1
+LabSize=60
+[eeschema/libraries]
+LibName1=power
+LibName2=suf
+LibName3=conn
+LibName4=device
