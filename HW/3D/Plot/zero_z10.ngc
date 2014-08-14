@@ -1,0 +1,6 @@
+(Created with emc2b post processor 2014/06/07 06:34)
+(tool change to 3 mm Drill Bit)
+G17 G90 G21
+Z10
+G00 X0 Y0
+G80

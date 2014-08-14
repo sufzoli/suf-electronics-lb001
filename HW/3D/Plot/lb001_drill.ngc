@@ -1,0 +1,16 @@
+(Created with emc2b post processor 2014/06/07 06:34)
+(tool change to 3 mm Drill Bit)
+T3 M06 G43
+G17 G90 G21
+G00 X20 Y252 S7000 M03
+Z2 
+G83 Q2 G98 X20 Y252 Z-20 R1 F200 
+X50 Y252  
+X20 Y198  
+X50 Y198  
+X13 Y63  
+X13 Y132  
+X48 Y132  
+X48 Y63  
+G80
+T0 M06 M02
